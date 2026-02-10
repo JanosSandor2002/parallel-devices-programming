@@ -1,0 +1,30 @@
+site_name: Párhuzamos eszközök programozása
+
+markdown_extensions:
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+    - Kezdőlap: index.md
+    - 1. Bevezetés: chapters/01_Introduction.md
+    - 2. Memóriakezelés: chapters/02_Memory.md
+    - 3. Szinkronizáció: chapters/03_Synchronization.md
+    - 4. API: chapters/04_API.md
+    - 5. Rendezések: chapters/05_Sorting.md
+    - 6. Kriptográfia: chapters/06_Cryptography.md
+    - 7. Tömörítés: chapters/07_Compression.md
+    - 8. Gépi tanulás: chapters/08_Machine_Learning.md
+    - 9. Jelfeldolgozás: chapters/09_Signal_Processing.md
+    - 10. OpenGL: chapters/10_OpenGL.md
+    - 11. Képfeldolgozás: chapters/11_Image_Processing.md
+    - 12. Szimulációk: chapters/12_Simulation.md
+    - 13. Alkalmazások: chapters/13_Application.md
+    - 14. Kutatások: chapters/14_Research.md
+
+theme: readthedocs
