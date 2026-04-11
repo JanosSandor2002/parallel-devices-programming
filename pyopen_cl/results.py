@@ -1,15 +1,3 @@
-"""
-plot_results.py
-===============
-Benchmark eredmények vizualizálása – GPU vs CPU (sum of squares).
-
-Futtatás:
-    python sum_of_squares_gpu.py   # először ez generálja a benchmark_results.json-t
-    python plot_results.py         # aztán ez a grafikon szkript
-
-Képek kimenete: benchmark_plots.png (és képernyőn is megjelenik)
-"""
-
 import json
 import os
 import sys
