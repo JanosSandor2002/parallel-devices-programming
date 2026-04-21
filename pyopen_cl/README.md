@@ -119,3 +119,106 @@ __kernel void reduce(__global const float* input,
 ```
 
 Minden work-item a saját indexén (`gid`) dolgozik: beolvassa az adott elemet, négyzetre emeli, és kiírja az output tömbbe. Az összegzés ezután CPU-n történik (`np.sum`).
+
+## Összegzés
+
+A GPU-s számítás **hierarchikus (tree) reduction** módszert használ.
+
+### Folyamat:
+
+1. **Elem-szintű feldolgozás**
+   - minden work-item kiszámolja:
+     \[
+     x_i^2
+     \]
+
+2. **Work-group szintű összeadás**
+   - lokális memória (`__local`) használatával
+   - stride-alapú bináris összeadás
+
+3. **Többlépcsős redukció**
+   - a partial eredmények újra GPU kernelbe kerülnek
+   - addig ismétlődik, amíg 1 érték marad
+
+### Reduction lánc:
+
+10,000,000 → 39,063 → 153 → 1
+
+Ez O(log N) mélységű hierarchiát jelent.
+
+---
+
+## OpenCL implementáció
+
+- `sum_of_squares`: inicializálás + első reduction pass
+- `reduce`: további hierarchikus összeadás
+
+Lokális memória használata:
+
+- 256 elem/work-group
+- barrier szinkronizációval
+
+---
+
+## Mérési eredmények
+
+![GPU benchmark eredmények](gpu_tree_reduction_terminal_results.png)
+
+### Futási idők
+
+| Módszer             | Idő      |
+| ------------------- | -------- |
+| CPU (NumPy)         | 25.55 ms |
+| GPU kernel          | 2.37 ms  |
+| GPU teljes pipeline | 3.92 ms  |
+
+---
+
+### Gyorsítás
+
+| Metrika         | Gyorsítás |
+| --------------- | --------- |
+| Kernel-only     | **10.8×** |
+| Teljes pipeline | **6.5×**  |
+
+---
+
+### Numerikus pontosság
+
+- CPU eredmény: `3332497.25`
+- GPU eredmény: `3332497.5`
+
+Relatív eltérés:
+
+7.5 × 10⁻⁸ → ✓ helyes egyezés
+
+---
+
+## Pipeline bontás
+
+- Kernel execution: ~2.37 ms
+- Host + memory overhead: ~1.5 ms
+
+a teljes futás nem csak compute, hanem memória és launch overhead is.
+
+---
+
+## Összegzés
+
+Ez a projekt bemutatja:
+
+- GPU párhuzamos számítás (OpenCL)
+- tree reduction algoritmus működése
+- lokális memória használata (work-group optimalizáció)
+- CPU vs GPU teljesítménykülönbség
+- multi-pass GPU pipeline viselkedés
+
+---
+
+## Fő tanulság
+
+- A GPU compute része rendkívül gyors (~10× CPU gyorsítás)
+- A teljes gyorsítás kisebb (~6.5×), mert:
+  - kernel indítási overhead
+  - memória mozgatás
+  - többlépcsős reduction pipeline

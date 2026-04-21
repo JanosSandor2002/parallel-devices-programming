@@ -53,6 +53,23 @@ def main():
     mf = cl.mem_flags
     input_buf = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=x)
 
+    # ── GPU TEST MODE (debug reduction trace) ─────────────────────────
+    banner("GPU TESZT (stride / partial reduction trace)")
+
+    debug_result_buf, debug_events = run_kernel(
+        queue,
+        kernels,
+        N,
+        input_buf,
+        debug=True   # <- ezt kell hozzáadni a run_kernelhez
+    )
+
+    debug_arr = np.empty(1, dtype=np.float32)
+    cl.enqueue_copy(queue, debug_arr, debug_result_buf)
+    queue.finish()
+
+    print(f"\n  DEBUG FINAL RESULT = {debug_arr[0]}\n")
+
     # ── GPU warmup ───────────────────────────────────────────
     result_buf_w, _ = run_kernel(queue, kernels, N, input_buf)   # <-- kernels
     queue.finish()

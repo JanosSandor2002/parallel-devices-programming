@@ -36,7 +36,7 @@ def load_kernel(ctx, kernel_path):
     return knl_sum, knl_reduce
 
 
-def run_kernel(queue, kernels, n, input_buf):
+def run_kernel(queue, kernels, n, input_buf, debug=False):
     knl_sum, knl_reduce = kernels
     mf = cl.mem_flags
     device = queue.device
@@ -63,9 +63,17 @@ def run_kernel(queue, kernels, n, input_buf):
     # ── További pass-ok: partial -> partial, amíg 1 elem nem marad ────
     current_buf = partial_buf
     current_n = num_groups
+    step = 1
 
     while current_n > 1:
         next_groups = math.ceil(current_n / local_size)
+        if debug:
+            print("\n────────────────────────────")
+            print(f"STEP {step}")
+            print(f"input size      = {current_n}")
+            print(f"local size      = {local_size}")
+            print(f"output groups   = {next_groups}")
+            print(f"reduction       = {current_n} → {next_groups}")
         next_buf = cl.Buffer(
             queue.context, mf.READ_WRITE,
             size=next_groups * np.dtype(np.float32).itemsize
@@ -81,6 +89,7 @@ def run_kernel(queue, kernels, n, input_buf):
         events.append(ev)
         current_buf = next_buf
         current_n = next_groups
+        step += 1
 
     return current_buf, events
 
