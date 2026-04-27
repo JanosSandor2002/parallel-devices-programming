@@ -152,3 +152,329 @@ A különbség nem a hardverből, hanem a driver stack-ből adódik.
 - Windows OpenCL stack jobban optimalizált AMD iGPU-ra
 - Linux OpenCL stack rugalmasabb, de kevésbé konzisztens
 - ugyanaz a kód eltérő GPU viselkedést és teljesítményt mutat
+
+C:\Users\User\AppData\Local\Programs\Python\Python314\Lib\site-packages\pyopencl\_\_init\_\_.py:570: CompilerWarning: Non-empty compiler output encountered. Set the environment variable PYOPENCL_COMPILER_OUTPUT=1 to see more.
+lambda: self.\_prg.build(options_bytes, devices),
+Platform : NVIDIA CUDA
+Eszköz : NVIDIA GeForce GT 1030
+Max CU : 3
+Globális mem: 2.0 GB
+
+──────────────────────────────────────────────────
+GPU TESZT (stride / partial reduction trace)
+──────────────────────────────────────────────────
+
+────────────────────────────
+STEP 1
+input size = 39063
+local size = 256
+output groups = 153
+reduction = 39063 → 153
+
+────────────────────────────
+STEP 2
+input size = 153
+local size = 256
+output groups = 1
+reduction = 153 → 1
+
+DEBUG FINAL RESULT = 3332497.5
+
+──────────────────────────────────────────────────
+GPU számítás (OpenCL kernel – teljes reduction GPU-n)
+──────────────────────────────────────────────────
+Eredmény = 3332497.500000
+Kernel idő (2 pass) = 6.19 ms
+Teljes pipeline idő = 6.98 ms
+
+──────────────────────────────────────────────────
+Helyesség-ellenőrzés
+Relatív eltérés: 7.50e-08 → ✓ OK
+
+──────────────────────────────────────────────────
+Teljesítmény összefoglalás
+──────────────────────────────────────────────────
+CPU idő : 25.06 ms
+GPU kernel idő : 6.19 ms
+GPU teljes pipeline : 6.98 ms
+Gyorsítás (kernel) : 4.0×
+Gyorsítás (pipeline) : 3.6×
+
+Eredmények mentve → results.json
+
+Futtasd a grafikonhoz: python results.py
+
+PS C:\Users\User\Desktop\parallel-devices-programming\pyopen_cl> py main.py
+
+──────────────────────────────────────────────────
+Adatok előkészítése
+──────────────────────────────────────────────────
+N = 10,000,000
+dtype = float32
+min / max = 0.0000 / 1.0000
+memória ≈ 38.1 MB
+
+──────────────────────────────────────────────────
+CPU számítás (NumPy)
+──────────────────────────────────────────────────
+Eredmény = 3332497.250000
+Idő = 22.70 ms
+
+──────────────────────────────────────────────────
+OpenCL (GPU) inicializálás
+──────────────────────────────────────────────────
+Platform : NVIDIA CUDA
+Eszköz : NVIDIA GeForce GT 1030
+Max CU : 3
+Globális mem: 2.0 GB
+
+──────────────────────────────────────────────────
+GPU TESZT (stride / partial reduction trace)
+──────────────────────────────────────────────────
+
+────────────────────────────
+STEP 1
+input size = 39063
+local size = 256
+output groups = 153
+reduction = 39063 → 153
+
+────────────────────────────
+STEP 2
+input size = 153
+local size = 256
+output groups = 1
+reduction = 153 → 1
+
+DEBUG FINAL RESULT = 3332497.5
+
+──────────────────────────────────────────────────
+GPU számítás (OpenCL kernel – teljes reduction GPU-n)
+──────────────────────────────────────────────────
+Eredmény = 3332497.500000
+Kernel idő (2 pass) = 4.79 ms
+Teljes pipeline idő = 5.32 ms
+
+──────────────────────────────────────────────────
+Helyesség-ellenőrzés
+Relatív eltérés: 7.50e-08 → ✓ OK
+
+──────────────────────────────────────────────────
+Teljesítmény összefoglalás
+──────────────────────────────────────────────────
+CPU idő : 22.70 ms
+GPU kernel idő : 4.79 ms
+GPU teljes pipeline : 5.32 ms
+Gyorsítás (kernel) : 4.7×
+Gyorsítás (pipeline) : 4.3×
+
+Eredmények mentve → results.json
+
+Futtasd a grafikonhoz: python results.py
+
+PS C:\Users\User\Desktop\parallel-devices-programming\pyopen_cl> py main.py
+
+──────────────────────────────────────────────────
+Adatok előkészítése
+──────────────────────────────────────────────────
+N = 10,000,000
+dtype = float32
+min / max = 0.0000 / 1.0000
+memória ≈ 38.1 MB
+
+──────────────────────────────────────────────────
+CPU számítás (NumPy)
+──────────────────────────────────────────────────
+Eredmény = 3332497.250000
+Idő = 22.89 ms
+
+──────────────────────────────────────────────────
+OpenCL (GPU) inicializálás
+──────────────────────────────────────────────────
+Platform : NVIDIA CUDA
+Eszköz : NVIDIA GeForce GT 1030
+Max CU : 3
+Globális mem: 2.0 GB
+
+──────────────────────────────────────────────────
+GPU TESZT (stride / partial reduction trace)
+──────────────────────────────────────────────────
+
+────────────────────────────
+STEP 1
+input size = 39063
+local size = 256
+output groups = 153
+reduction = 39063 → 153
+
+────────────────────────────
+STEP 2
+input size = 153
+local size = 256
+output groups = 1
+reduction = 153 → 1
+
+DEBUG FINAL RESULT = 3332497.5
+
+──────────────────────────────────────────────────
+GPU számítás (OpenCL kernel – teljes reduction GPU-n)
+──────────────────────────────────────────────────
+Eredmény = 3332497.500000
+Kernel idő (2 pass) = 4.78 ms
+Teljes pipeline idő = 5.19 ms
+
+──────────────────────────────────────────────────
+Helyesség-ellenőrzés
+Relatív eltérés: 7.50e-08 → ✓ OK
+
+──────────────────────────────────────────────────
+Teljesítmény összefoglalás
+──────────────────────────────────────────────────
+CPU idő : 22.89 ms
+GPU kernel idő : 4.78 ms
+GPU teljes pipeline : 5.19 ms
+Gyorsítás (kernel) : 4.8×
+Gyorsítás (pipeline) : 4.4×
+
+Eredmények mentve → results.json
+
+Futtasd a grafikonhoz: python results.py
+
+PS C:\Users\User\Desktop\parallel-devices-programming\pyopen_cl> py main.py
+
+──────────────────────────────────────────────────
+Adatok előkészítése
+──────────────────────────────────────────────────
+N = 10,000,000
+dtype = float32
+min / max = 0.0000 / 1.0000
+memória ≈ 38.1 MB
+
+──────────────────────────────────────────────────
+CPU számítás (NumPy)
+──────────────────────────────────────────────────
+Eredmény = 3332497.250000
+Idő = 23.41 ms
+
+──────────────────────────────────────────────────
+OpenCL (GPU) inicializálás
+──────────────────────────────────────────────────
+Platform : NVIDIA CUDA
+Eszköz : NVIDIA GeForce GT 1030
+Max CU : 3
+Globális mem: 2.0 GB
+
+──────────────────────────────────────────────────
+GPU TESZT (stride / partial reduction trace)
+──────────────────────────────────────────────────
+
+────────────────────────────
+STEP 1
+input size = 39063
+local size = 256
+output groups = 153
+reduction = 39063 → 153
+
+────────────────────────────
+STEP 2
+input size = 153
+local size = 256
+output groups = 1
+reduction = 153 → 1
+
+DEBUG FINAL RESULT = 3332497.5
+
+──────────────────────────────────────────────────
+GPU számítás (OpenCL kernel – teljes reduction GPU-n)
+──────────────────────────────────────────────────
+Eredmény = 3332497.500000
+Kernel idő (2 pass) = 5.66 ms
+Teljes pipeline idő = 6.81 ms
+
+──────────────────────────────────────────────────
+Helyesség-ellenőrzés
+Relatív eltérés: 7.50e-08 → ✓ OK
+
+──────────────────────────────────────────────────
+Teljesítmény összefoglalás
+──────────────────────────────────────────────────
+CPU idő : 23.41 ms
+GPU kernel idő : 5.66 ms
+GPU teljes pipeline : 6.81 ms
+Gyorsítás (kernel) : 4.1×
+Gyorsítás (pipeline) : 3.4×
+
+Eredmények mentve → results.json
+
+Futtasd a grafikonhoz: python results.py
+
+PS C:\Users\User\Desktop\parallel-devices-programming\pyopen_cl> py main.py
+
+──────────────────────────────────────────────────
+Adatok előkészítése
+──────────────────────────────────────────────────
+N = 10,000,000
+dtype = float32
+min / max = 0.0000 / 1.0000
+memória ≈ 38.1 MB
+
+──────────────────────────────────────────────────
+CPU számítás (NumPy)
+──────────────────────────────────────────────────
+Eredmény = 3332497.250000
+Idő = 21.23 ms
+
+──────────────────────────────────────────────────
+OpenCL (GPU) inicializálás
+──────────────────────────────────────────────────
+Platform : NVIDIA CUDA
+Eszköz : NVIDIA GeForce GT 1030
+Max CU : 3
+Globális mem: 2.0 GB
+
+──────────────────────────────────────────────────
+GPU TESZT (stride / partial reduction trace)
+──────────────────────────────────────────────────
+
+────────────────────────────
+STEP 1
+input size = 39063
+local size = 256
+output groups = 153
+reduction = 39063 → 153
+
+────────────────────────────
+STEP 2
+input size = 153
+local size = 256
+output groups = 1
+reduction = 153 → 1
+
+DEBUG FINAL RESULT = 3332497.5
+
+──────────────────────────────────────────────────
+GPU számítás (OpenCL kernel – teljes reduction GPU-n)
+──────────────────────────────────────────────────
+Eredmény = 3332497.500000
+Kernel idő (2 pass) = 4.78 ms
+Teljes pipeline idő = 5.22 ms
+
+──────────────────────────────────────────────────
+Helyesség-ellenőrzés
+──────────────────────────────────────────────────
+Relatív eltérés: 7.50e-08 → ✓ OK
+
+──────────────────────────────────────────────────
+Teljesítmény összefoglalás
+──────────────────────────────────────────────────
+CPU idő : 21.23 ms
+GPU kernel idő : 4.78 ms
+GPU teljes pipeline : 5.22 ms
+Gyorsítás (kernel) : 4.4×
+Gyorsítás (pipeline) : 4.1×
+
+Eredmények mentve → results.json
+
+Futtasd a grafikonhoz: python results.py
+
+PS C:\Users\User\Desktop\parallel-devices-programming\pyopen_cl>
