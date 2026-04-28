@@ -149,12 +149,12 @@ GPU pipeline:
 
 Gyorsítás:
 
-- Kernel: 0.6× – 2.4×
-- Pipeline: 1.0× – 1.5×
+- Kernel: 0.6× – 5.4×
+- Pipeline: 1.0× – 4.8×
 
 Jellemzők:
 
-- nagy szórás (±30–60%)
+- nagy szórás
 - Mesa OpenCL korlátok
 - compute unit instabilitás
 - gyakori fallback viselkedés
@@ -167,7 +167,7 @@ Jellemzők:
 - Vega gfx902: 8× – 13×
 - Radeon 660M:
   - Windows: 6.5× - 10.8x
-  - Linux: 0.6× – 2.4×
+  - Linux: 0.6× – 5.4x
 
 ### Pipeline gyorsítás
 
@@ -175,7 +175,7 @@ Jellemzők:
 - Vega gfx902: 2× – 10×
 - Radeon 660M:
   - Windows: 6.5×
-  - Linux: 1.0× – 1.5×
+  - Linux: 1.0× – 4.8×
 
 ### Stabilitás
 
